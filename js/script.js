@@ -28,12 +28,23 @@ return {
       return pokemonList;
     },
     add: function(item) {
-      pokemonList.push(item);
-    },
+    //adding typeof() to only allow addition of objects to the pokemonList  
     
-  };
+          if(typeof(item) === "object") {
+
+            //&& adding second conditional (nested) to force the new items to have the same keys as the first object in pokemonList
+              if (JSON.stringify(Object.keys(pokemonList[0])) === JSON.stringify(Object.keys(item)))
+           
+          {
+        pokemonList.push(item)
+          } else{
+              document.write("<p>Error adding item, item needs to be an object and have the required 3 properties</p>")
+          }}
+  }};
+
 
 })();
+
 
 pokemonRepository.add({ 
 
@@ -42,8 +53,10 @@ pokemonRepository.add({
     types: "electric"
 
 });
+
 //returning the array into the console
-console.log(pokemonRepository.getAll()); 
+console.log(pokemonRepository.getAll());
+
 
 //forEach() loop insteaf of the for loop
 
@@ -60,4 +73,26 @@ if (item.height > 1.2)
 }
 }
 );
+
+//creating a variable for the filter() by name function
+var filterByName =  pokemonRepository.getAll().filter(function(pokeName) {
+  return pokeName.name == "Pikachu";
+});
+//showing the filtered name on the console
+console.log(filterByName);
+
+//different route - showing only the pokemon name insteaf of the pokemon object
+//converting the names in the pokemonList into an array (pokeNames)
+let pokeNames = [];
+
+for (let i = 0; i < pokemonRepository.getAll().length; i++){
+    pokeNames.push(pokemonRepository.getAll()[i].name);
+};
+
+var filterByName2 = pokeNames.filter(function(name)
+{
+    return name == "Pikachu";
+})
+console.log(filterByName2)
+
 
