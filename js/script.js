@@ -76,7 +76,7 @@ if (item.height > 1.2)
 
 //creating a variable for the filter() by name function
 var filterByName =  pokemonRepository.getAll().filter(function(pokeName) {
-  return pokeName.name == "Pikachu";
+  return pokeName.name === "Pikachu";
 });
 //showing the filtered name on the console
 console.log(filterByName);
@@ -91,7 +91,7 @@ for (let i = 0; i < pokemonRepository.getAll().length; i++){
 
 var filterByName2 = pokeNames.filter(function(name)
 {
-    return name == "Pikachu";
+    return name === "Pikachu";
 })
 console.log(filterByName2)
 
