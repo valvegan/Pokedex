@@ -45,29 +45,18 @@ function add(item) {
           }
     };
 
-function filter(name){
-    //I'm confused about code to exectute
-    //return name.name === "Pikachu" ??
-}
-/*var filtered = 
-    pokemonList.filter(function(item){
-       return item.name === "Bulbasaur";
-    })
-;
+//filter function to filter pokemon objects by name 
+//works, finally, however I'm not sure if having it in a variable is the correct way 
+function filter(searchName){
+var filteredObject = pokemonList.filter((item) => item.name == searchName)
 
-console.log(filtered)*/
- /*   filter: function(pokename){
-       let filterByName = pokemonList.filter(function(pokename){    
-       return pokename.name === "Pikachu"
-       },
-       )
-       console.log(filterByName)
-    },*/
+return filteredObject};
+
 
 return {
     getAll: getAll,
     add: add,
-    filter: filter,
+    filter: filter
 
 
 };
@@ -86,10 +75,7 @@ pokemonRepository.add({
 //returning the array into the console
 console.log(pokemonRepository.getAll());
 
-//Calling the filter function
-//not sure how to execute, would like to have object with "filtered" name appear on console
 //forEach() loop insteaf of the for loop
-
 pokemonRepository.getAll().forEach(function(item){
     document.write(item.name + " (height " + item.height + ") " + "<br>")
 //adding conditional to check if the pokemon height is above 1.2
@@ -101,4 +87,5 @@ if (item.height > 1.2)
 }
 );
 
-
+//make the pokemon object selected by name appear on the console 
+console.log(pokemonRepository.filter("Pikachu"))
