@@ -50,11 +50,10 @@ function filter(searchName){
 return pokemonList.filter((item) => item.name == searchName)
 };
 
-
 return {
     getAll: getAll,
     add: add,
-    filter: filter
+    filter: filter,
 
 
 };
