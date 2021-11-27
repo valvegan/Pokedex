@@ -46,11 +46,9 @@ function add(item) {
     };
 
 //filter function to filter pokemon objects by name 
-//works, finally, however I'm not sure if having it in a variable is the correct way 
 function filter(searchName){
-var filteredObject = pokemonList.filter((item) => item.name == searchName)
-
-return filteredObject};
+return pokemonList.filter((item) => item.name == searchName)
+};
 
 
 return {
