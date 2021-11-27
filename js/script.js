@@ -27,24 +27,39 @@ return {
     getAll: function() {
       return pokemonList;
     },
+//Adding filter function
+
+    filter: function(pokename){
+       let filterByName = pokemonList.filter(function(pokename){    
+       return pokename.name === "Pikachu"
+       },
+       )
+       console.log(filterByName)
+    },
+
     add: function(item) {
     //adding typeof() to only allow addition of objects to the pokemonList  
-    
-          if(typeof(item) === "object") {
+    let itemAttributes = Object.keys(item)
+    const safeAttributes = ["name", "height", "types"]
+          if(typeof(item) === "object" &&
 
-            //&& adding second conditional (nested) to force the new items to have the same keys as the first object in pokemonList
-              if (JSON.stringify(Object.keys(pokemonList[0])) === JSON.stringify(Object.keys(item)))
-           
+            //&& adding second conditional to force the new items to have the same keys as the first object in pokemonList
+            safeAttributes.every(function(attr){
+                return attr in item}))
+                /*
+                safeAttributes.ever(attr => attr in item) */
+            //JSON.stringify(Object.keys(pokemonList[0])) === JSON.stringify(Object.keys(item)))
           {
         pokemonList.push(item)
           } else{
               document.write("<p>Error adding item, item needs to be an object and have the required 3 properties</p>")
-          }}
-  }};
+          }
+    },
 
+}
 
-})();
-
+}
+)();
 
 pokemonRepository.add({ 
 
@@ -57,7 +72,8 @@ pokemonRepository.add({
 //returning the array into the console
 console.log(pokemonRepository.getAll());
 
-
+//Calling the filter function
+pokemonRepository.filter()
 //forEach() loop insteaf of the for loop
 
 pokemonRepository.getAll().forEach(function(item){
@@ -67,32 +83,8 @@ pokemonRepository.getAll().forEach(function(item){
 
 if (item.height > 1.2)
 {
-    
-    document.write("Wow, that's a big pokemon!" + "<br>");
-    
+    document.write("Wow, that's a big pokemon!" + "<br>"); 
 }
 }
 );
-
-//creating a variable for the filter() by name function
-var filterByName =  pokemonRepository.getAll().filter(function(pokeName) {
-  return pokeName.name === "Pikachu";
-});
-//showing the filtered name on the console
-console.log(filterByName);
-
-//different route - showing only the pokemon name insteaf of the pokemon object
-//converting the names in the pokemonList into an array (pokeNames)
-let pokeNames = [];
-
-for (let i = 0; i < pokemonRepository.getAll().length; i++){
-    pokeNames.push(pokemonRepository.getAll()[i].name);
-};
-
-var filterByName2 = pokeNames.filter(function(name)
-{
-    return name === "Pikachu";
-})
-console.log(filterByName2)
-
 
