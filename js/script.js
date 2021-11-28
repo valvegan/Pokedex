@@ -24,22 +24,25 @@ let pokemonRepository = (function(){
 ];
 
 function getAll() {
+
       return pokemonList;
+
     };
 
-function add(item) {
+function add(pokemon) {
+
     //adding typeof() to only allow addition of objects to the pokemonList  
-    let itemAttributes = Object.keys(item)
+    let itemAttributes = Object.keys(pokemon)
     const safeAttributes = ["name", "height", "types"]
-          if(typeof(item) === "object" &&
+          if(typeof(pokemon) === "object" &&
 
             //&& adding second conditional to force the new items to have the same keys as the first object in pokemonList
             safeAttributes.every(function(attr){
-                return attr in item}))
+                return attr in pokemon}))
                 
             //JSON.stringify(Object.keys(pokemonList[0])) === JSON.stringify(Object.keys(item)))
           {
-        pokemonList.push(item)
+        pokemonList.push(pokemon)
           } else{
               document.write("<p>Error adding item, item needs to be an object and have the required 3 properties</p>")
           }
@@ -47,14 +50,28 @@ function add(item) {
 
 //filter function to filter pokemon objects by name 
 function filter(searchName){
-return pokemonList.filter((item) => item.name == searchName)
+
+return pokemonList.filter((pokemon) => pokemon.name == searchName)
+
 };
+
+function addListItem(pokemon){
+
+    let pokemonListDOM = document.querySelector(".pokemon-list");
+    let listItem = document.createElement("li");
+    let button = document.createElement('button');
+    button.innerText = pokemon.name;
+    button.classList.add("button");
+    listItem.appendChild(button);
+    pokemonListDOM.appendChild(listItem);
+
+}
 
 return {
     getAll: getAll,
     add: add,
     filter: filter,
-
+    addListItem: addListItem,
 
 };
 
@@ -73,14 +90,9 @@ pokemonRepository.add({
 console.log(pokemonRepository.getAll());
 
 //forEach() loop insteaf of the for loop
-pokemonRepository.getAll().forEach(function(item){
-    document.write(item.name + " (height " + item.height + ") " + "<br>")
-//adding conditional to check if the pokemon height is above 1.2
+pokemonRepository.getAll().forEach(function(pokemon){
 
-if (item.height > 1.2)
-{
-    document.write("Wow, that's a big pokemon!" + "<br>"); 
-}
+    pokemonRepository.addListItem(pokemon)   
 }
 );
 
