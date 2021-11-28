@@ -55,6 +55,18 @@ return pokemonList.filter((pokemon) => pokemon.name == searchName)
 
 };
 
+function showDetails(pokemon){
+
+   console.log(pokemon)
+};
+
+//function for click event 
+function clickyEvent(button, pokemon){
+button.addEventListener("click", function(){
+    showDetails(pokemon)
+})
+}
+
 function addListItem(pokemon){
 
     let pokemonListDOM = document.querySelector(".pokemon-list");
@@ -64,15 +76,18 @@ function addListItem(pokemon){
     button.classList.add("button");
     listItem.appendChild(button);
     pokemonListDOM.appendChild(listItem);
+    //invoking clickevent function on the button
+    clickyEvent(button, pokemon);
 
-}
+};
 
 return {
     getAll: getAll,
     add: add,
     filter: filter,
     addListItem: addListItem,
-
+    showDetails: showDetails,
+    clickyEvent: clickyEvent
 };
 
 }
