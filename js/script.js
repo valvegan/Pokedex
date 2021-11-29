@@ -6,10 +6,16 @@ let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
 
   // Other functions remain here
 
+  //fetching the api
   function loadList() {
+      //loading message
+      showLoadingMessage();
+      //fetch data
     return fetch(apiUrl).then(function (response) {
       return response.json();
     }).then(function (json) {
+        //hide loading message
+        hideLoadingMessage();
       json.results.forEach(function (item) {
         let pokemon = {
           name: item.name,
@@ -19,23 +25,32 @@ let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
         //console.log(pokemon);
       });
     }).catch(function (e) {
+        //hide loading message
+        hideLoadingMessage();
       console.error(e);
     })
-  }
+  };
 
+  //load pokemon detail 
 function loadDetails(pokemon){
+    //show loading message
+    showLoadingMessage();
     let url = pokemon.detailsUrl;
     return fetch(url).then(function(response){
         return response.json();
     }).then(function(details){
+        //hide loading message
+        hideLoadingMessage();
         //now we add the details to the item
         pokemon.imageUrl = details.sprites.front_default;
         pokemon.height = details.height;
         pokemon.types = details.types;
     }).catch(function(e){
+        //hide loading message
+        hideLoadingMessage();
         console.error(e);
     });
-}
+};
 
 
 function getAll() {
@@ -43,6 +58,17 @@ function getAll() {
       return pokemonList;
 
     };
+
+//message on load 
+let loadingMessage = document.querySelector(".loading-message")
+
+function showLoadingMessage(){
+loadingMessage.innerText = "Loading pokemons...please wait"
+};
+
+function hideLoadingMessage(){
+loadingMessage.classList.add("remove");
+};
 
 function add(pokemon) {
 
@@ -81,7 +107,7 @@ function clickyEvent(button, pokemon){
 button.addEventListener("click", function(){
     showDetails(pokemon)
 })
-}
+};
 
 function addListItem(pokemon){
 
@@ -106,6 +132,8 @@ return {
     clickyEvent: clickyEvent,
     loadList: loadList,
     loadDetails: loadDetails,
+    showLoadingMessage: showLoadingMessage,
+    hideLoadingMessage: hideLoadingMessage,
 };
 
 }
