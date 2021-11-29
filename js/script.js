@@ -1,27 +1,42 @@
 let pokemonRepository = (function(){
 
-    let pokemonList = [
-    {
-    name: "Bulbasaur", 
-    height: 0.7, 
-    types:["grass", "poison"]
-},
-    {
-    name: "Charmander", 
-    height: 0.6, 
-    types: "fire"
-},
-    {
-    name: "Charmelon", 
-    height: 1.1, 
-    types: "fire"
-},
-    {
-    name: "Charizard", 
-    height: 1.7, 
-    types:["fire", "flying"]
+    let pokemonList = [];
+
+let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
+
+  // Other functions remain here
+
+  function loadList() {
+    return fetch(apiUrl).then(function (response) {
+      return response.json();
+    }).then(function (json) {
+      json.results.forEach(function (item) {
+        let pokemon = {
+          name: item.name,
+          detailsUrl: item.url
+        };
+        add(pokemon);
+        //console.log(pokemon);
+      });
+    }).catch(function (e) {
+      console.error(e);
+    })
+  }
+
+function loadDetails(pokemon){
+    let url = pokemon.detailsUrl;
+    return fetch(url).then(function(response){
+        return response.json();
+    }).then(function(details){
+        //now we add the details to the item
+        pokemon.imageUrl = details.sprites.front_default;
+        pokemon.height = details.height;
+        pokemon.types = details.types;
+    }).catch(function(e){
+        console.error(e);
+    });
 }
-];
+
 
 function getAll() {
 
@@ -32,15 +47,16 @@ function getAll() {
 function add(pokemon) {
 
     //adding typeof() to only allow addition of objects to the pokemonList  
-    let itemAttributes = Object.keys(pokemon)
-    const safeAttributes = ["name", "height", "types"]
-          if(typeof(pokemon) === "object" &&
-
-            //&& adding second conditional to force the new items to have the same keys as the first object in pokemonList
-            safeAttributes.every(function(attr){
-                return attr in pokemon}))
-                
-            //JSON.stringify(Object.keys(pokemonList[0])) === JSON.stringify(Object.keys(item)))
+    //let itemAttributes = Object.keys(pokemon)
+    //const safeAttributes = ["name", "height", "types"]
+          if(
+              typeof(pokemon) === "object" &&
+                "name" in pokemon &&
+                "detailsUrl" in pokemon)  
+            
+            //safeAttributes.every(function(attr){
+                //return attr in pokemon}))
+              
           {
         pokemonList.push(pokemon)
           } else{
@@ -49,16 +65,16 @@ function add(pokemon) {
     };
 
 //filter function to filter pokemon objects by name 
-function filter(searchName){
+/*function filter(searchName){
 
-return pokemonList.filter((pokemon) => pokemon.name == searchName)
+return pokemonList.filter((pokemon) => pokemon.name === searchName)
 
-};
+};*/
 
 function showDetails(pokemon){
-
-   console.log(pokemon)
-};
+  pokemonRepository.loadDetails(pokemon).then(function () {
+    console.log(pokemon);
+  })};
 
 //function for click event 
 function clickyEvent(button, pokemon){
@@ -70,12 +86,12 @@ button.addEventListener("click", function(){
 function addListItem(pokemon){
 
     let pokemonListDOM = document.querySelector(".pokemon-list");
-    let listItem = document.createElement("li");
+    let listPokemon = document.createElement("li");
     let button = document.createElement('button');
     button.innerText = pokemon.name;
     button.classList.add("button");
-    listItem.appendChild(button);
-    pokemonListDOM.appendChild(listItem);
+    listPokemon.appendChild(button);
+    pokemonListDOM.appendChild(listPokemon);
     //invoking clickevent function on the button
     clickyEvent(button, pokemon);
 
@@ -84,32 +100,26 @@ function addListItem(pokemon){
 return {
     getAll: getAll,
     add: add,
-    filter: filter,
+    //filter: filter,
     addListItem: addListItem,
     showDetails: showDetails,
-    clickyEvent: clickyEvent
+    clickyEvent: clickyEvent,
+    loadList: loadList,
+    loadDetails: loadDetails,
 };
 
 }
 )();
 
-pokemonRepository.add({ 
-
-    name: 'Pikachu', 
-    height: 0.4,
-    types: "electric"
-
+pokemonRepository.loadList().then(function() {
+  // Now the data is loaded!
+  //forEach() loop insteaf of the for loop
+  pokemonRepository.getAll().forEach(function(pokemon){
+    pokemonRepository.addListItem(pokemon);
+  });
 });
 
-//returning the array into the console
-console.log(pokemonRepository.getAll());
-
-//forEach() loop insteaf of the for loop
-pokemonRepository.getAll().forEach(function(pokemon){
-
-    pokemonRepository.addListItem(pokemon)   
-}
-);
 
 //make the pokemon object selected by name appear on the console 
-console.log(pokemonRepository.filter("Pikachu"))
+//console.log(pokemonRepository.filter("bulbasaur"))
+
