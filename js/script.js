@@ -147,7 +147,6 @@ pokemonRepository.loadList().then(function() {
   });
 });
 
-
 //make the pokemon object selected by name appear on the console 
 //console.log(pokemonRepository.filter("bulbasaur"))
 
