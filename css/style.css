@@ -105,5 +105,14 @@ h1{
 }
 
 .modal img{
-    width: 50%;
+    width: 20%;
+}
+
+.swipe-right, .swipe-left{
+    width: 3rem;
+}
+
+.modal-buttons{
+    display: flex;
+    justify-content: space-between;
 }

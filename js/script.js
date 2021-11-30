@@ -93,13 +93,6 @@ function add(pokemon) {
           }
     };
 
-//filter function to filter pokemon objects by name 
-/*function filter(searchName){
-
-return pokemonList.filter((pokemon) => pokemon.name === searchName)
-
-};*/
-
 //make new function to show the pokemon modal on click 
 function showModal(pokemon){
     //modal container(background)
@@ -110,12 +103,28 @@ function showModal(pokemon){
     modal.classList.add('modal');
     //append modal window to parent
     modalContainer.appendChild(modal);
+    
+    //creating a child element containing the "close", "<", and ">" buttons
+    let modalButtonsFlex = document.createElement("div");
+    modalButtonsFlex.classList.add("modal-buttons");
+    modal.appendChild(modalButtonsFlex);
+    //swipe left button
+    let swipeButtonLeft = document.createElement("button");
+    swipeButtonLeft.classList.add("swipe-left", "button");
+    swipeButtonLeft.innerText = "<";
+    modalButtonsFlex.appendChild(swipeButtonLeft);
+    swipeButtonLeft.addEventListener("click", nextSibling)
     //close button
-    let closeButtonElement = document.createElement('button');
-    closeButtonElement.classList.add('close-modal', "button");
-    closeButtonElement.innerText = "Close";
-    closeButtonElement.addEventListener('click', hideModal);
-    modal.appendChild(closeButtonElement);
+    let modalButtonClose = document.createElement('button');
+    modalButtonClose.classList.add('close-modal', "button");
+    modalButtonClose.innerText = "Close";
+    modalButtonClose.addEventListener('click', hideModal);
+    modalButtonsFlex.appendChild(modalButtonClose);
+    //swipe right
+    let swipeButtonRight = document.createElement("button");
+    swipeButtonRight.classList.add("swipe-right", "button");
+    swipeButtonRight.innerText = ">";
+    modalButtonsFlex.appendChild(swipeButtonRight);
     //pokemon name (title)
     let modalTitle = document.createElement('h1');
     modalTitle.innerText = pokemon.name;
@@ -136,13 +145,16 @@ function showModal(pokemon){
          modal.appendChild(pokeTypes);
     });
 
-    
-   
+    //function to show next sibling
+    function nextSibling(pokemon){
+
+    }
+
     //hide modal 
     function hideModal (){
     modalContainer.classList.remove("is-visible");
-
-    ////remove "local" pokemon from the modal - throws error
+    ////remove "local" pokemon from the modal - works only if i press "close"
+    
     modalContainer.removeChild(modal);
         };
 
@@ -151,14 +163,18 @@ window.addEventListener('keydown', (e) => {
       let modalContainer = document.querySelector('#modal-container');
       if (e.key === 'Escape' && modalContainer.classList.contains('is-visible')) {
         hideModal();
+        
+        
       }
     });
+
 
 //click to hide modal 
 modalContainer.addEventListener('click', (e) => {
       let target = e.target;
       if (target === modalContainer) {
         hideModal();
+        
     }
     })
 };
@@ -189,17 +205,12 @@ function addListItem(pokemon){
     pokemonList.appendChild(pokemonItem);
     //invoking clickevent function on the button
     clickyEvent(button, pokemon);
-
 };
 
-
-
- /*;*/
-
 return {
+    nextElement: nextElement,
     getAll: getAll,
     add: add,
-    //filter: filter,
     addListItem: addListItem,
     showDetails: showDetails,
     clickyEvent: clickyEvent,
