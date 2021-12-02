@@ -104,6 +104,36 @@ function add(pokemon) {
     
     //make new function to show the pokemon modal on click 
     function showModal(pokemon){
+
+
+         //search navigation
+  let searchBtn = document.querySelector(".search-button");
+  let searchInput = document.querySelector(".search-input");
+  //searchBtn.addEventListener("click", filterItem);
+  searchBtn.addEventListener("click", searchedPoke)
+
+
+  //search bar filter function
+ function filtered(searchName){
+  return pokemonList.filter((item) => item.name == searchName)
+};
+
+  let searched = filtered(searchInput.value)
+  console.log(searched)
+  //Find index of the searched pokemon
+  let indexOfSearched = pokemonList.map(function(e){
+    return e.name
+  }).indexOf(searchInput.value);
+  console.log(indexOfSearched);
+
+
+  function searchedPoke() {
+      let pokemonIndex = indexOfSearched;
+      searchedPoke = pokemonList[pokemonIndex];
+      showDetails(searchedPoke)
+    };
+
+    
     //remove modalContainer content
         modalContainer.innerHTML = ''
         
@@ -155,33 +185,11 @@ function add(pokemon) {
 
 
     
-    //search navigation
-  let searchBtn = document.querySelector(".search-button");
-  let searchInput = document.querySelector(".search-input");
-  //searchBtn.addEventListener("click", filterItem);
-  
+ 
 
-  //not sure why if i try to pass the "name" dynamically (as from the input box) it results in empty string, if i 
-  //write the pokemon name as an argument in the code it works :/
-  
- function filter(){
-  var filteredObject = pokemonList.filter((item) => 
-  item.name === searchInput.value)
-return filteredObject;
-};
-filter()
 
-  console.log(filter())
-           
-/*function filterItem(){
-  if(searchInput.value === ""){
-    console.log("h")
-  }
-  if(searchInput.value === "bulbasaur"){
-    console.log("hey")
-  }else{console.log("what")}
-};
-*/
+
+
      //pokemon name (title)
         let modalTitle = document.createElement('h1');
         modalTitle.innerText = pokemon.name;
