@@ -160,15 +160,18 @@ function add(pokemon) {
   let searchInput = document.querySelector(".search-input");
   //searchBtn.addEventListener("click", filterItem);
   
+
+  //not sure why if i try to pass the "name" dynamically (as from the input box) it results in empty string, if i 
+  //write the pokemon name as an argument in the code it works :/
   
- function filter(searchName){
+ function filter(){
   var filteredObject = pokemonList.filter((item) => 
-  item.name == searchName)
+  item.name === searchInput.value)
 return filteredObject;
 };
 filter()
 
-  console.log(filter("Bulbasaur"))
+  console.log(filter())
            
 /*function filterItem(){
   if(searchInput.value === ""){
