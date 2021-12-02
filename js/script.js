@@ -100,9 +100,10 @@ function add(pokemon) {
 
 //modal container(background)
     let modalContainer = document.querySelector("#modal-container");
-
+    
+    
     //make new function to show the pokemon modal on click 
-    function showModal(pokemon, nextPoke, prevPoke){
+    function showModal(pokemon){
     //remove modalContainer content
         modalContainer.innerHTML = ''
         
@@ -137,8 +138,8 @@ function add(pokemon) {
     
  
     let index = pokemonList.indexOf(pokemon)
-    //let index = pokemon["detailsUrl"].split("/")[6]
-    
+
+
     function next() {
       let pokemonIndex = index + 1
       nextPokemon = pokemonList[pokemonIndex + 1];
@@ -151,6 +152,33 @@ function add(pokemon) {
       prevPokemon = pokemonList[pokemonIndex - 1]
       showDetails(prevPokemon)
     }
+
+
+    
+    //search navigation
+  let searchBtn = document.querySelector(".search-button");
+  let searchInput = document.querySelector(".search-input");
+  //searchBtn.addEventListener("click", filterItem);
+  
+  
+ function filter(searchName){
+  var filteredObject = pokemonList.filter((item) => 
+  item.name == searchName)
+return filteredObject;
+};
+filter()
+
+  console.log(filter("Bulbasaur"))
+           
+/*function filterItem(){
+  if(searchInput.value === ""){
+    console.log("h")
+  }
+  if(searchInput.value === "bulbasaur"){
+    console.log("hey")
+  }else{console.log("what")}
+};
+*/
      //pokemon name (title)
         let modalTitle = document.createElement('h1');
         modalTitle.innerText = pokemon.name;
@@ -176,7 +204,8 @@ function add(pokemon) {
         modalContainer.classList.add('is-visible');    
         
     }; //showModal function finished
-  
+
+
 
 
     //hide modal 
@@ -233,7 +262,6 @@ function addListItem(pokemon){
 
 
 return {
-    //nextElement: nextElement,
     getAll: getAll,
     add: add,
     addListItem: addListItem,
@@ -244,16 +272,15 @@ return {
     showLoadingMessage: showLoadingMessage,
     hideLoadingMessage: hideLoadingMessage,
     showModal: showModal,
-    //swipeModal: swipeModal
+   // searchPokemon: searchPokemon
 };
 })();
 
 pokemonRepository.loadList().then(function() {
   // Now the data is loaded!
   //forEach() loop insteaf of the for loop
-  pokemonRepository.getAll().forEach(function(pokemon, index){
-    pokemonRepository.addListItem(pokemon);
-    index = index + 1;
+  pokemonRepository.getAll().forEach(function(pokemon){
+    pokemonRepository.addListItem(pokemon);;
 
   })
   
