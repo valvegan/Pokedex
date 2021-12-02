@@ -7,47 +7,82 @@ let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
   //Other functions remain here
 
   //fetching the api
-  function loadList() {
+    function loadList() {
       //loading message
-      showLoadingMessage();
+    showLoadingMessage();
       //fetch data
-    return fetch(apiUrl).then(function (response) {
-      return response.json();
-    }).then(function (json) {
+    return fetch(apiUrl)
+      .then(function (response) {
+    return response.json();
+    })
+      .then(function (json) {
         //hide loading message
-        hideLoadingMessage();
-      json.results.forEach(function (item) {
+    hideLoadingMessage();
+    json.results.forEach(function (item) {
 
-        //convert pokemon names to uppercase
-          let pokeName = item.name;
-          pokeName = pokeName.charAt(0).toUpperCase() + pokeName.slice(1);
+      //convert pokemon names to uppercase
+        let pokeName = item.name;
+        
+        pokeName = pokeName.charAt(0).toUpperCase() + pokeName.slice(1);
         let pokemon = {
-          name: pokeName,
-          detailsUrl: item.url
+        name: pokeName,
+        detailsUrl: item.url
         };
-        add(pokemon);
+    add(pokemon);
+    
       });
-    }).catch(function (e) {
+
+      //find the index of a pokemon by its name
+      const index = (element)=> element.name === "Raticate"
+      console.log(pokemonList.findIndex(index));
+      
+      /*let current = pokemonList[0]
+      let next = pokemonList[0 + 1]  
+      console.log(current)
+      let next1 = pokemonList[1]
+      console.log(next)*/
+
+    })
+    .catch(function (e) {
         //hide loading message
-        hideLoadingMessage();
-      console.error(e);
+    hideLoadingMessage();
+    console.error(e);
     })
   };
 
   //load pokemon detail 
-function loadDetails(pokemon){
+    function loadDetails(pokemon, nextPoke, prevPoke){
     //show loading message
-    showLoadingMessage();
+      showLoadingMessage();
     let url = pokemon.detailsUrl;
-    return fetch(url).then(function(response){
-        return response.json();
-    }).then(function(details){
+      return fetch(url).then(function(response){
+      return response.json();
+    })
+        .then(function(details){
         //hide loading message
-        hideLoadingMessage();
+      hideLoadingMessage();
         //now we add the details to the item
         pokemon.imageUrl = details.sprites.front_shiny;
         pokemon.height = details.height;
         pokemon.types = details.types;
+        
+        
+       let index1 = pokemonList.indexOf(pokemon)
+       let next1 = index1 + 1;
+       let prev1 = index1 - 1;
+      //get the next pokemon details in the console
+      nextPoke = pokemonList[next1]
+      nextPoke.imageUrl = details.sprites.front_shiny;
+      nextPoke.height = details.height;
+       nextPoke.types = details.types;
+      console.log(nextPoke);
+      let prevPoke = pokemonList[prev1]
+      prevPoke.imageUrl = details.sprites.front_shiny;
+      prevPoke.height = details.height;
+       prevPoke.types = details.types;
+      console.log(prevPoke);
+
+      
     }).catch(function(e){
         //hide loading message
         hideLoadingMessage();
@@ -95,7 +130,7 @@ function add(pokemon) {
     let modalContainer = document.querySelector("#modal-container");
 
     //make new function to show the pokemon modal on click 
-    function showModal(pokemon){
+    function showModal(pokemon, nextPoke, prevPoke){
     //remove modalContainer content
         modalContainer.innerHTML = ''
         
@@ -125,9 +160,58 @@ function add(pokemon) {
         swipeButtonRight.innerText = ">";
         modalButtonsFlex.appendChild(swipeButtonRight);
         //event listener for buttons
-     //   swipeButtonRight.addEventListener("click", swipeModal(1));
+   swipeButtonRight.addEventListener("click", next);
      //    swipeButtonLeft.addEventListener("click", swipeModal(0));
-    //pokemon name (title)
+    
+   /* let current = pokemon.name;
+        let findIndex = (element)=> element.name === current
+        let index = pokemonList.findIndex(findIndex);
+        console.log(index)
+        //or with indexOf
+       let index1 = pokemonList.indexOf(pokemon)
+
+       let next1 = index1 + 1;
+       let prev1 = index1 - 1;
+      //get the next pokemon details in the console
+      let nextPoke = pokemonList[next1]
+      nextPoke = {
+        name: pokemonList[next1].name,
+        detailsUrl: pokemonList[next1].detailsUrl,
+        }
+      console.log(nextPoke.detailsUrl);*/
+        
+     // pokemon.imageUrl = details.sprites.front_shiny;
+       // pokemon.height = details.height;
+        //pokemon.types = details.types;
+      //let getPrevPokeByIndex = pokemonList[prev1]
+      //console.log(getPrevPokeByIndex)
+        let index1 = pokemonList.indexOf(pokemon)
+       let next1 = index1 + 1;
+       let prev1 = index1 - 1;
+      //get the next pokemon details in the console
+      nextPoke = pokemonList[next1]
+      
+      console.log(nextPoke);
+      prevPoke = pokemonList[prev1]
+     
+      console.log(prevPoke);
+      function next(){
+         //pokemon name (title)
+        modalTitle.innerText = nextPoke.name;
+    //modal content (pokemon image)
+        modalImg.src = nextPoke.imageUrl;
+    //modal content (height)
+       modalPokemonInfo.innerHTML = ("<p>Height: " + nextPoke.height + "</p>" + "<p>Types: ")
+    //modal content types
+    //foreach loop on types
+        nextPoke.types.forEach(item => {
+       let pokeTypes = document.createElement('span');
+        pokeTypes.innerText = item.type.name + " | ";
+    });
+      };
+
+
+     //pokemon name (title)
         let modalTitle = document.createElement('h1');
         modalTitle.innerText = pokemon.name;
         modal.appendChild(modalTitle);
@@ -148,32 +232,30 @@ function add(pokemon) {
     });
 
     //append modal window to parent
-        //modal.id = "current-pokemon";
         modalContainer.appendChild(modal);
         modalContainer.classList.add('is-visible');
+
+
+        //get pokemon index on the console upon clicking 
+       
         
     }; //showModal function finished
     
 
-   
-  /*  function swipeModal(pokemon){
-    pokemonRepository.loadDetails(pokemon).then(function () {
-console.log(pokemon)
-        })};*/
+  /*function swipeModal(){
+
+  }*/
 
 
     //hide modal 
     function hideModal (){
     modalContainer.classList.remove("is-visible");
-    modalContainer.innerHTML = ''
         };
 
 //esc key to hide the modal
 window.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && modalContainer.classList.contains('is-visible')) {
         hideModal();
-        
-        
       }
     });
 
@@ -182,8 +264,7 @@ window.addEventListener('keydown', (e) => {
 modalContainer.addEventListener('click', (e) => {
       let target = e.target;
       if (target === modalContainer) {
-        hideModal();
-        
+        hideModal();     
     }
     });
 
@@ -192,7 +273,8 @@ modalContainer.addEventListener('click', (e) => {
 function showDetails(pokemon){
     pokemonRepository.loadDetails(pokemon).then(function () {
 showModal(pokemon)
-        })};
+        })
+      };
 
 
 //function for click event 
@@ -215,6 +297,8 @@ function addListItem(pokemon){
     //invoking clickevent function on the button
     clickyEvent(button, pokemon);
 };
+
+
 
 return {
     //nextElement: nextElement,
@@ -239,10 +323,8 @@ pokemonRepository.loadList().then(function() {
     pokemonRepository.addListItem(pokemon);
     index = index + 1;
 
-  });
+  })
+  
 });
 
-
-//make the pokemon object selected by name appear on the console 
-//console.log(pokemonRepository.filter("bulbasaur"))
 
