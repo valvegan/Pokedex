@@ -31,17 +31,6 @@ let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
     add(pokemon);
     
       });
-
-      //find the index of a pokemon by its name
-      const index = (element)=> element.name === "Raticate"
-      console.log(pokemonList.findIndex(index));
-      
-      /*let current = pokemonList[0]
-      let next = pokemonList[0 + 1]  
-      console.log(current)
-      let next1 = pokemonList[1]
-      console.log(next)*/
-
     })
     .catch(function (e) {
         //hide loading message
@@ -51,7 +40,7 @@ let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
   };
 
   //load pokemon detail 
-    function loadDetails(pokemon, nextPoke, prevPoke){
+    function loadDetails(pokemon){
     //show loading message
       showLoadingMessage();
     let url = pokemon.detailsUrl;
@@ -65,23 +54,6 @@ let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
         pokemon.imageUrl = details.sprites.front_shiny;
         pokemon.height = details.height;
         pokemon.types = details.types;
-        
-        
-       let index1 = pokemonList.indexOf(pokemon)
-       let next1 = index1 + 1;
-       let prev1 = index1 - 1;
-      //get the next pokemon details in the console
-      nextPoke = pokemonList[next1]
-      nextPoke.imageUrl = details.sprites.front_shiny;
-      nextPoke.height = details.height;
-       nextPoke.types = details.types;
-      console.log(nextPoke);
-      let prevPoke = pokemonList[prev1]
-      prevPoke.imageUrl = details.sprites.front_shiny;
-      prevPoke.height = details.height;
-       prevPoke.types = details.types;
-      console.log(prevPoke);
-
       
     }).catch(function(e){
         //hide loading message
@@ -147,7 +119,7 @@ function add(pokemon) {
         swipeButtonLeft.classList.add("swipe-left", "button");
         swipeButtonLeft.innerText = "<";
         modalButtonsFlex.appendChild(swipeButtonLeft);
-    //swipeButtonLeft.addEventListener("click", nextSibling)
+    
     //close button
         let modalButtonClose = document.createElement('button');
         modalButtonClose.classList.add('close-modal', "button");
@@ -160,57 +132,25 @@ function add(pokemon) {
         swipeButtonRight.innerText = ">";
         modalButtonsFlex.appendChild(swipeButtonRight);
         //event listener for buttons
-   swipeButtonRight.addEventListener("click", next);
-     //    swipeButtonLeft.addEventListener("click", swipeModal(0));
+        swipeButtonRight.addEventListener("click", next);
+        swipeButtonLeft.addEventListener("click", previous)
     
-   /* let current = pokemon.name;
-        let findIndex = (element)=> element.name === current
-        let index = pokemonList.findIndex(findIndex);
-        console.log(index)
-        //or with indexOf
-       let index1 = pokemonList.indexOf(pokemon)
+ 
+    let index = pokemonList.indexOf(pokemon)
+    //let index = pokemon["detailsUrl"].split("/")[6]
+    
+    function next() {
+      let pokemonIndex = index + 1
+      nextPokemon = pokemonList[pokemonIndex + 1];
+      showDetails(nextPokemon)
+    };
 
-       let next1 = index1 + 1;
-       let prev1 = index1 - 1;
-      //get the next pokemon details in the console
-      let nextPoke = pokemonList[next1]
-      nextPoke = {
-        name: pokemonList[next1].name,
-        detailsUrl: pokemonList[next1].detailsUrl,
-        }
-      console.log(nextPoke.detailsUrl);*/
-        
-     // pokemon.imageUrl = details.sprites.front_shiny;
-       // pokemon.height = details.height;
-        //pokemon.types = details.types;
-      //let getPrevPokeByIndex = pokemonList[prev1]
-      //console.log(getPrevPokeByIndex)
-        let index1 = pokemonList.indexOf(pokemon)
-       let next1 = index1 + 1;
-       let prev1 = index1 - 1;
-      //get the next pokemon details in the console
-      nextPoke = pokemonList[next1]
-      
-      console.log(nextPoke);
-      prevPoke = pokemonList[prev1]
-     
-      console.log(prevPoke);
-      function next(){
-         //pokemon name (title)
-        modalTitle.innerText = nextPoke.name;
-    //modal content (pokemon image)
-        modalImg.src = nextPoke.imageUrl;
-    //modal content (height)
-       modalPokemonInfo.innerHTML = ("<p>Height: " + nextPoke.height + "</p>" + "<p>Types: ")
-    //modal content types
-    //foreach loop on types
-        nextPoke.types.forEach(item => {
-       let pokeTypes = document.createElement('span');
-        pokeTypes.innerText = item.type.name + " | ";
-    });
-      };
-
-
+    function previous() {
+      if(index <= 1) return
+      let pokemonIndex = Number(index) -1
+      prevPokemon = pokemonList[pokemonIndex - 1]
+      showDetails(prevPokemon)
+    }
      //pokemon name (title)
         let modalTitle = document.createElement('h1');
         modalTitle.innerText = pokemon.name;
@@ -233,18 +173,10 @@ function add(pokemon) {
 
     //append modal window to parent
         modalContainer.appendChild(modal);
-        modalContainer.classList.add('is-visible');
-
-
-        //get pokemon index on the console upon clicking 
-       
+        modalContainer.classList.add('is-visible');    
         
     }; //showModal function finished
-    
-
-  /*function swipeModal(){
-
-  }*/
+  
 
 
     //hide modal 
