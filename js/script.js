@@ -100,37 +100,19 @@ function add(pokemon) {
 
 //modal container(background)
     let modalContainer = document.querySelector("#modal-container");
-    
+    let searchBtn = document.querySelector(".search-button");
+  let searchInput = document.querySelector(".search-input");
+  
     
     //make new function to show the pokemon modal on click 
     function showModal(pokemon){
 
-
-         //search navigation
-  let searchBtn = document.querySelector(".search-button");
-  let searchInput = document.querySelector(".search-input");
-  //searchBtn.addEventListener("click", filterItem);
   searchBtn.addEventListener("click", searchedPoke)
-
-
-  //search bar filter function
- function filtered(searchName){
-  return pokemonList.filter((item) => item.name == searchName)
-};
-
-  let searched = filtered(searchInput.value)
-  console.log(searched)
-  //Find index of the searched pokemon
   let indexOfSearched = pokemonList.map(function(e){
     return e.name
   }).indexOf(searchInput.value);
-  console.log(indexOfSearched);
-
-
   function searchedPoke() {
-      let pokemonIndex = indexOfSearched;
-      searchedPoke = pokemonList[pokemonIndex];
-      showDetails(searchedPoke)
+      showDetails(pokemonList[indexOfSearched])
     };
 
     
@@ -181,15 +163,8 @@ function add(pokemon) {
       let pokemonIndex = Number(index) -1
       prevPokemon = pokemonList[pokemonIndex - 1]
       showDetails(prevPokemon)
-    }
-
-
+    };
     
- 
-
-
-
-
      //pokemon name (title)
         let modalTitle = document.createElement('h1');
         modalTitle.innerText = pokemon.name;
@@ -222,6 +197,7 @@ function add(pokemon) {
     //hide modal 
     function hideModal (){
     modalContainer.classList.remove("is-visible");
+
         };
 
 //esc key to hide the modal
