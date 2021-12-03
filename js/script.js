@@ -160,7 +160,7 @@ function add(pokemon) {
 
     function previous() {
       if(index <= 1) return
-      let pokemonIndex = Number(index) -1
+      let pokemonIndex = index - 1
       prevPokemon = pokemonList[pokemonIndex - 1]
       showDetails(prevPokemon)
     };
