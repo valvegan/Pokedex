@@ -104,15 +104,26 @@ function add(pokemon) {
   //search bar
   let searchBtn = document.querySelector(".search-button");
   let searchInput = document.querySelector(".search-input");
+
+  //press enter to fill in the input (doesnt work)
+  searchInput.focus()
   searchInput.addEventListener('keyup', findPoke);
   //event listener for search button, to show searched pokemon
-  searchBtn.addEventListener("click", function(){
-    let searched = searchInput.value.toLowerCase();
-    let indexOfSearched = pokemonList.map(function(e){
-    return e.name.toLowerCase()
+  searchBtn.addEventListener("click", search);
+
+ 
+   /*document.addEventListener("keydown", (e)=>{
+         if (e.key === "Enter" && ){
+      search();
+    }})*/
+
+function search(){
+  let searched = searchInput.value.toLowerCase();
+  let indexOfSearched = pokemonList.map(function(e){
+  return e.name.toLowerCase()
   }).indexOf(searched);
-    showDetails(pokemonList[indexOfSearched])
-  });
+  showDetails(pokemonList[indexOfSearched])
+}
 
   //function to filter through pokemons and delete the unwanted ones
 function findPoke(){
@@ -125,15 +136,13 @@ function findPoke(){
       names = names.innerText || names.textContent
       if (names.toLowerCase().indexOf(searched) > -1) {
         li[i].style.display = ""
-      }else  {
+        li[i].classList.add("first");
+        }
+      else  {
         li[i].style.display = "none"
-      }
+      };
   }};
   findPoke()
-      
-    //enter key after typing the pokemon name, to show modal
-    //esc key to hide the moda
-    
     
     //function to show the pokemon modal on click 
     function showModal(pokemon){
