@@ -111,21 +111,24 @@ function add(pokemon) {
   //event listener for search button, to show searched pokemon
   searchBtn.addEventListener("click", search);
 
- 
-   /*document.addEventListener("keydown", (e)=>{
-         if (e.key === "Enter" && ){
-      search();
-    }})*/
-
+    
+//function to make the modal of the searched pokemon pop up
 function search(){
   let searched = searchInput.value.toLowerCase();
+  //find index of the searched pokemon
   let indexOfSearched = pokemonList.map(function(e){
   return e.name.toLowerCase()
   }).indexOf(searched);
-  showDetails(pokemonList[indexOfSearched])
+  showDetails(pokemonList[indexOfSearched]); 
 }
 
-  //function to filter through pokemons and delete the unwanted ones
+//press enter key to have pokemon modal pop up
+window.addEventListener("keydown", (e)=>{
+      if (e.key === "Enter"){
+      search();
+    }})
+    
+  //function to filter through pokemons and delete the unwanted ones from the list
 function findPoke(){
     let li = document.querySelectorAll(".pokemon-list li")
     let searched = searchInput.value.toLowerCase();
@@ -142,7 +145,6 @@ function findPoke(){
         li[i].style.display = "none"
       };
   }};
-  findPoke()
     
     //function to show the pokemon modal on click 
     function showModal(pokemon){
@@ -176,17 +178,18 @@ function findPoke(){
         swipeButtonLeft.addEventListener("click", previous)
       //get previous and next pokemon by index
     let index = pokemonList.indexOf(pokemon) + 1;
-  
+      //next pokemon function
     function next() {
       nextPokemon = pokemonList[index + 1];
       showDetails(nextPokemon)}
-
+      //previous pokemon function
     function previous() {
       if(index <= 2) return
       prevPokemon = pokemonList[index - 2]
       showDetails(prevPokemon)
     };
-    
+
+  
      //pokemon name (title)
         let modalTitle = document.createElement('h1');
         modalTitle.innerText = pokemon.name;
