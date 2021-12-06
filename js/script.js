@@ -1,10 +1,8 @@
 let pokemonRepository = (function(){
 
-    let pokemonList = [];
+let pokemonList = [];
 
 let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
-
-  //Other functions remain here
 
   //fetching the api
     function loadList(pokemon) {
@@ -19,23 +17,20 @@ let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
         //hide loading message
     hideLoadingMessage();
     json.results.forEach(function (item) {
-
       //convert pokemon names to uppercase
-        let pokeName = item.name;
-        
+        let pokeName = item.name; 
         pokeName = pokeName.charAt(0).toUpperCase() + pokeName.slice(1);
         let pokemon = {
         name: pokeName,
         detailsUrl: item.url
         };
-    add(pokemon);
-    
-      });
-    })
-    .catch(function (e) {
-        //hide loading message
-    hideLoadingMessage();
-    console.error(e);
+          add(pokemon);
+        });
+        })
+         .catch(function (e) {
+          //hide loading message
+            hideLoadingMessage();
+           console.error(e);
     })
   };
 
@@ -46,7 +41,7 @@ let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
     let url = pokemon.detailsUrl;
       return fetch(url).then(function(response){
       return response.json();
-    })
+        c })
         .then(function(details){
         //hide loading message
       hideLoadingMessage();
@@ -54,7 +49,6 @@ let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
         pokemon.imageUrl = details.sprites.front_shiny;
         pokemon.height = details.height;
         pokemon.types = details.types;
-      
     }).catch(function(e){
         //hide loading message
         hideLoadingMessage();
@@ -62,24 +56,20 @@ let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
     });
 };
 
-
 function getAll() {
       return pokemonList;
     };
 
 //message on load 
 let loadingMessage = document.querySelector(".loading-message");
-
 function showLoadingMessage(){
 loadingMessage.innerText = "Loading pokemons...please wait"
 };
-
 function hideLoadingMessage(){
 loadingMessage.classList.add("remove");
 };
 
 function add(pokemon) {
-
     //adding typeof() to only allow addition of objects to the pokemonList  
     //let itemAttributes = Object.keys(pokemon)
     //const safeAttributes = ["name", "height", "types"]
@@ -87,10 +77,8 @@ function add(pokemon) {
               typeof(pokemon) === "object" &&
                 "name" in pokemon &&
                 "detailsUrl" in pokemon)  
-            
             //safeAttributes.every(function(attr){
-                //return attr in pokemon}))
-              
+                //return attr in pokemon}))  
           {
         pokemonList.push(pokemon)
           } else{
@@ -104,14 +92,12 @@ function add(pokemon) {
   //search bar
   let searchBtn = document.querySelector(".search-button");
   let searchInput = document.querySelector(".search-input");
-
   //press enter to fill in the input (doesnt work)
   searchInput.focus()
   searchInput.addEventListener('keyup', findPoke);
   //event listener for search button, to show searched pokemon
   searchBtn.addEventListener("click", search);
 
-    
 //function to make the modal of the searched pokemon pop up
 function search(){
   let searched = searchInput.value.toLowerCase();
@@ -146,8 +132,8 @@ function findPoke(){
       };
   }};
     
-    //function to show the pokemon modal on click 
-    function showModal(pokemon){
+//function to show the pokemon modal on click 
+function showModal(pokemon){
     //remove modalContainer content
         modalContainer.innerHTML = '' 
     //modal window (pokemon details)  
@@ -262,7 +248,6 @@ button.addEventListener("click", function(){
 
 
 function addListItem(pokemon){
-   
     let pokemonItem = document.createElement("li"); 
     pokemonListDOM.appendChild(pokemonItem);
     let button = document.createElement('button');
@@ -271,8 +256,7 @@ function addListItem(pokemon){
     button.id = "show-details";
     pokemonItem.appendChild(button);
     //invoking clickevent function on the button
-    clickyEvent(button, pokemon);
-    
+    clickyEvent(button, pokemon); 
 };
 
 return {
@@ -285,21 +269,15 @@ return {
     showLoadingMessage: showLoadingMessage,
     hideLoadingMessage: hideLoadingMessage,
     showModal: showModal,
-   // findPoke: findPoke
-   // searchPokemon: searchPokemon
 };
 })();
 
 pokemonRepository.loadList().then(function() {
-  // Now the data is loaded!
   //forEach() loop insteaf of the for loop
   pokemonRepository.getAll()
-  
   .forEach(function(pokemon){
-    pokemonRepository.addListItem(pokemon);;
-
+    pokemonRepository.addListItem(pokemon);
   })
-  
 });
 
 
