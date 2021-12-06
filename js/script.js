@@ -127,7 +127,7 @@ window.addEventListener("keydown", (e)=>{
       if (e.key === "Enter"){
       search();
     }})
-    
+
   //function to filter through pokemons and delete the unwanted ones from the list
 function findPoke(){
     let li = document.querySelectorAll(".pokemon-list li")
@@ -188,8 +188,15 @@ function findPoke(){
       prevPokemon = pokemonList[index - 2]
       showDetails(prevPokemon)
     };
-
-  
+    //event listeners for left and right arrow keys 
+    document.addEventListener("keydown", (e)=>{
+      if (e.key === "ArrowRight"){
+      next();
+    }})
+    document.addEventListener("keydown", (e)=>{
+      if (e.key === "ArrowLeft"){
+      previous();
+    }})
      //pokemon name (title)
         let modalTitle = document.createElement('h1');
         modalTitle.innerText = pokemon.name;
