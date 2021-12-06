@@ -184,19 +184,20 @@ function findPoke(){
       showDetails(nextPokemon)}
       //previous pokemon function
     function previous() {
-      if(index <= 2) return
+      if(index <= 1) return
       prevPokemon = pokemonList[index - 2]
       showDetails(prevPokemon)
     };
-    //event listeners for left and right arrow keys 
-    document.addEventListener("keydown", (e)=>{
+    //event listeners for left and right arrow keys (doesn't work)
+    document.addEventListener("keyup", (e)=>{
       if (e.key === "ArrowRight"){
       next();
     }})
-    document.addEventListener("keydown", (e)=>{
+    document.addEventListener("keyup", (e)=>{
       if (e.key === "ArrowLeft"){
       previous();
     }})
+    
      //pokemon name (title)
         let modalTitle = document.createElement('h1');
         modalTitle.innerText = pokemon.name;
@@ -219,10 +220,10 @@ function findPoke(){
 
     //append modal window to parent
         modalContainer.appendChild(modal);
-        modalContainer.classList.add('is-visible'); 
-  
+        modalContainer.classList.add('is-visible');
     }; //showModal function finished
 
+    
     //hide modal 
     function hideModal (){
     modalContainer.classList.remove("is-visible");
