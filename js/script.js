@@ -19,10 +19,8 @@ let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
         //hide loading message
     hideLoadingMessage();
     json.results.forEach(function (item) {
-
       //convert pokemon names to uppercase
-        let pokeName = item.name;
-        
+        let pokeName = item.name; 
         pokeName = pokeName.charAt(0).toUpperCase() + pokeName.slice(1);
         let pokemon = {
         name: pokeName,
@@ -54,6 +52,7 @@ let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
         pokemon.imageUrl = details.sprites.front_shiny;
         pokemon.height = details.height;
         pokemon.types = details.types;
+        pokemon.weight = details.weight;
       
     }).catch(function(e){
         //hide loading message
@@ -75,7 +74,7 @@ loadingMessage.innerText = "Loading pokemons...please wait"
 };
 
 function hideLoadingMessage(){
-loadingMessage.classList.add("remove");
+loadingMessage.style.display = "none"
 };
 
 function add(pokemon) {
@@ -90,7 +89,6 @@ function add(pokemon) {
             
             //safeAttributes.every(function(attr){
                 //return attr in pokemon}))
-              
           {
         pokemonList.push(pokemon)
           } else{
@@ -99,7 +97,6 @@ function add(pokemon) {
     };
 
 //modal container(background)
-  let modalContainer = document.querySelector("#modal-container");
   let pokemonListDOM = document.querySelector(".pokemon-list");
   //search bar
   let searchBtn = document.querySelector(".search-button");
@@ -148,34 +145,41 @@ function findPoke(){
     
     //function to show the pokemon modal on click 
     function showModal(pokemon){
-    //remove modalContainer content
-        modalContainer.innerHTML = '' 
-    //modal window (pokemon details)  
-        let modal = document.createElement('div');
-        modal.classList.add('modal');      
-    //creating a child element containing the "close", "<", and ">" buttons
-        let modalButtonsFlex = document.createElement("div");
-        modalButtonsFlex.classList.add("modal-buttons");
-        modal.appendChild(modalButtonsFlex);
+      let modalBody = $('.modal-body');
+      let modalTitle = $('.modal-title');
+        //clear existing content from modal
+          modalTitle.empty();
+          modalBody.empty();
+    //create element for name in modal content
+    let modalName = $('<h1 class="text-capitalize">' + pokemon.name + '</h1>');
+
+    //create img in modal content
+    let modalImg = $('<img class="modal-img">');
+    modalImg.attr('src', pokemon.imageUrl);
+    
+    //create element for height in modal content
+    let modalInfo = $('<p>' + 'Height: ' + pokemon.height + '</p>' + '<p>' + 'Weight: ' + pokemon.weight + 'kg </p>' + "<p>" + "Types : ");
+     modalTitle.append(modalName);
+    modalBody.append(modalImg);
+    modalBody.append(modalInfo);
+    
+    //modal content types
+    //foreach loop on types
+    pokemon.types.forEach(item => {
+        let pokeTypes = document.createElement('span');
+        pokeTypes.innerText = item.type.name + " | ";
+        modalBody.append(pokeTypes);
+    });
+
+    $('#modal-container').modal();
+  
     //swipe left button
-        let swipeButtonLeft = document.createElement("button");
-        swipeButtonLeft.classList.add("swipe-left", "button");
-        swipeButtonLeft.innerText = "<";
-        modalButtonsFlex.appendChild(swipeButtonLeft);
-    //close button
-        let modalButtonClose = document.createElement('button');
-        modalButtonClose.classList.add('close-modal', "button");
-        modalButtonClose.innerText = "Close";
-        modalButtonClose.addEventListener('click', hideModal);
-        modalButtonsFlex.appendChild(modalButtonClose);
+        let swipeButtonLeft = $(".btn-left")
     //swipe right
-        let swipeButtonRight = document.createElement("button");
-        swipeButtonRight.classList.add("swipe-right", "button");
-        swipeButtonRight.innerText = ">";
-        modalButtonsFlex.appendChild(swipeButtonRight);
+         let swipeButtonRight = $(".btn-right")
         //event listener for buttons
-        swipeButtonRight.addEventListener("click", next);
-        swipeButtonLeft.addEventListener("click", previous)
+        swipeButtonRight.on("click", next);
+        swipeButtonLeft.on("click", previous)
       //get previous and next pokemon by index
     let index = pokemonList.indexOf(pokemon) + 1;
       //next pokemon function
@@ -198,52 +202,9 @@ function findPoke(){
       previous();
     }})
     
-     //pokemon name (title)
-        let modalTitle = document.createElement('h1');
-        modalTitle.innerText = pokemon.name;
-        modal.appendChild(modalTitle);
-    //modal content (pokemon image)
-        let modalImg = document.createElement("img");
-        modalImg.src = pokemon.imageUrl;
-        modal.appendChild(modalImg);
-    //modal content (height)
-        let modalPokemonInfo = document.createElement("p");
-        modalPokemonInfo.innerHTML = ("<p>Height: " + pokemon.height + "</p>" + "<p>Types: ")
-        modal.appendChild(modalPokemonInfo);
-    //modal content types
-    //foreach loop on types
-        pokemon.types.forEach(item => {
-        let pokeTypes = document.createElement('span');
-        pokeTypes.innerText = item.type.name + " | ";
-         modal.appendChild(pokeTypes);
-    });
-
-    //append modal window to parent
-        modalContainer.appendChild(modal);
-        modalContainer.classList.add('is-visible');
     }; //showModal function finished
 
     
-    //hide modal 
-    function hideModal (){
-    modalContainer.classList.remove("is-visible");
-        };
-
-//esc key to hide the modal
-window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && modalContainer.classList.contains('is-visible')) {
-        hideModal();
-      }
-    });
-
-//click to hide modal 
-modalContainer.addEventListener('click', (e) => {
-      let target = e.target;
-      if (target === modalContainer) {
-        hideModal();     
-    }
-    });
-
 
 //showdetails of pokemons 
 function showDetails(pokemon){
@@ -262,16 +223,15 @@ button.addEventListener("click", function(){
 
 
 function addListItem(pokemon){
-   
     let pokemonItem = document.createElement("li"); 
+    pokemonItem.classList.add("group-list-item")
     pokemonListDOM.appendChild(pokemonItem);
     let button = document.createElement('button');
     button.innerText = pokemon.name;
-    button.classList.add("button");
-    button.id = "show-details";
+    button.classList.add("btn", "btn-primary");
     pokemonItem.appendChild(button);
     //invoking clickevent function on the button
-    clickyEvent(button, pokemon);
+    clickyEvent(button, pokemon); 
     
 };
 
@@ -285,8 +245,6 @@ return {
     showLoadingMessage: showLoadingMessage,
     hideLoadingMessage: hideLoadingMessage,
     showModal: showModal,
-   // findPoke: findPoke
-   // searchPokemon: searchPokemon
 };
 })();
 
