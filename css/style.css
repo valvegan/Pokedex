@@ -5,6 +5,7 @@
 }
 h1{
     padding: 20px 0;
+    font-size: 5rem
 }
 body{
     font-family: "Roboto", sans serif;
@@ -13,35 +14,16 @@ body{
     line-height: 140%;
 }
 
-.search-box{
-    display: flex;
-    width: 50%;
-    margin: 10px;
-    height: 4rem;
-    justify-content: center;
-    
-}
 .search-input{
     width: 70%;
     height: 4rem;
     border-radius: 25px;
-    margin-right: 10px;
-    font-size: 2rem;
-    padding-left: 25px;
+    font-size: 2rem;  
 }
-.search-button{
-    background-color: rgb(204, 147, 147);
-    cursor: pointer;
-    width: 4rem;
-     transition: background-color ease 1s;
-     border-radius: 10px;
-}
-.search-button:hover{
-     transition: background-color ease 1s;
-     background-color: rgb(238, 189, 189);
-}
-.search-button img {
-    width: 90%;
+
+
+.btn img {
+    width: 100%;
 }
 @media all and (max-width: 400px){
   body{
@@ -49,8 +31,6 @@ body{
 }
  .search-input{
      width: 70%;
-     height: 3.5rem;
-     align-items: center;
 }}
 @media all and (max-width: 1000px){
 
@@ -59,17 +39,23 @@ body{
 }
 
 h1{
-    text-align: center;
+    font-size: 4rem;
 }
 
 }
-@media all and (min-width: 400px) and (max-width: 1000px){
-    body{
-    font-size: 3rem;
+@media all and (min-width: 1000px){
+   .pokemon-list {
+       display: inline
+   }
+    .pokemon-list li {
+        text-align: left;
+        display: inherit
+    }
 }
-
+.btn{
+    font-size: 4rem;
+    margin: 10px;
 }
-.modal {
-    text-align: center;
-    
+.search-button {
+    font-size: 2rem;
 }

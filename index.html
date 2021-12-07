@@ -15,14 +15,14 @@
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Navbar</a>
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
+        <a class="navbar-brand" href="#"><img src="img/nav-icon.svg" alt="pokemon-ball-icon"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav ">
                 <li class="nav-item active">
                     <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                 </li>
@@ -36,18 +36,18 @@
         </div>
     </nav>
 <div class="pokedex">
-    <h1>Pokemons</h1>
+    <h1 class="text-center">Pokemons</h1>
     <div class="loading-message"></div>
-    <div class="search-box">
+    <div class="search-box text-center">
         <input type="text" class="search-input" placeholder="search for a pokemon">
-        <button class="search-button btn btn-primary"><img src="img/searchincon.svg" alt=""></button>
+        <button class="search-button btn btn-primary"><img src="img/searchincon.svg" alt="search-icon"></button>
     </div>
-    <ul class="pokemon-list list-group">
+    <ul class="pokemon-list list-group text-center">
     </ul>
     <!-- Modal -->
     <div class="modal fade" id="modal-container" tabindex="-1" role="dialog" aria-labelledby="pokemonModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog text-center" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="pokemonModalLabel">.</h5>
