@@ -7,7 +7,7 @@ let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
   //Other functions remain here
 
   //fetching the api
-    function loadList(pokemon) {
+    function loadList() {
       //loading message
     showLoadingMessage();
       //fetch data
@@ -221,18 +221,19 @@ button.addEventListener("click", function(){
 })
 };
 
-
 function addListItem(pokemon){
     let pokemonItem = document.createElement("li"); 
-    //pokemonItem.classList.add("group-list-item")
+    pokemonItem.classList.add("group-list-item")
     pokemonListDOM.appendChild(pokemonItem);
     let button = document.createElement('button');
     button.innerText = pokemon.name;
     button.classList.add("btn", "btn-primary");
+    button.dataset.toggle = "#modal"
+    button.dataset.target = "#modal-container"
     pokemonItem.appendChild(button);
     //invoking clickevent function on the button
     clickyEvent(button, pokemon); 
-    
+
 };
 
 return {
@@ -242,8 +243,6 @@ return {
     showDetails: showDetails,
     loadList: loadList,
     loadDetails: loadDetails,
-    showLoadingMessage: showLoadingMessage,
-    hideLoadingMessage: hideLoadingMessage,
     showModal: showModal,
 };
 })();

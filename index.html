@@ -38,12 +38,10 @@
 <div class="pokedex">
     <h1 class="text-center">Pokemons</h1>
     <div class="loading-message"></div>
-    <div class="search-box text-center">
+    <form class="search-box text-center">
         <input type="text" class="search-input" placeholder="search for a pokemon">
         <button class="search-button btn btn-primary"><img src="img/searchincon.svg" alt="search-icon"></button>
-    </div>
-    <ul class="pokemon-list list-group text-center">
-    </ul>
+    </form>
     <!-- Modal -->
     <div class="modal fade" id="modal-container" tabindex="-1" role="dialog" aria-labelledby="pokemonModalLabel"
         aria-hidden="true">
@@ -65,7 +63,10 @@
             </div>
         </div>
     </div>
-</div>
+    </div>
+    <ul class="pokemon-list list-group text-center">
+    </ul>
+    
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
