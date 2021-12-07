@@ -159,10 +159,9 @@ function findPoke(){
     
     //create element for height in modal content
     let modalInfo = $('<p>' + 'Height: ' + pokemon.height + '</p>' + '<p>' + 'Weight: ' + pokemon.weight + 'kg </p>' + "<p>" + "Types : ");
-     modalTitle.append(modalName);
+    modalTitle.append(modalName);
     modalBody.append(modalImg);
     modalBody.append(modalInfo);
-    
     //modal content types
     //foreach loop on types
     pokemon.types.forEach(item => {
@@ -171,7 +170,7 @@ function findPoke(){
         modalBody.append(pokeTypes);
     });
 
-    $('#modal-container').modal();
+    
   
     //swipe left button
         let swipeButtonLeft = $(".btn-left")
@@ -204,8 +203,7 @@ function findPoke(){
     
     }; //showModal function finished
 
-    
-
+  
 //showdetails of pokemons 
 function showDetails(pokemon){
     pokemonRepository.loadDetails(pokemon).then(function () {
@@ -214,26 +212,17 @@ showModal(pokemon)
       };
 
 
-//function for click event 
-function clickyEvent(button, pokemon){
-button.addEventListener("click", function(){
-    showDetails(pokemon)
-})
-};
-
 function addListItem(pokemon){
     let pokemonItem = document.createElement("li"); 
     pokemonItem.classList.add("group-list-item")
     pokemonListDOM.appendChild(pokemonItem);
     let button = document.createElement('button');
     button.innerText = pokemon.name;
-    button.classList.add("btn", "btn-primary");
-    button.dataset.toggle = "#modal"
-    button.dataset.target = "#modal-container"
     pokemonItem.appendChild(button);
-    //invoking clickevent function on the button
-    clickyEvent(button, pokemon); 
-
+    button.classList.add("btn", "btn-primary");
+    button.dataset.toggle = "modal"
+    button.dataset.target = "#modal-container"
+    
 };
 
 return {
