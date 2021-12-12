@@ -158,7 +158,7 @@ function findPoke(){
     modalImg.attr('src', pokemon.imageUrl);
     
     //create element for height in modal content
-    let modalInfo = $('<p>' + 'Height: ' + pokemon.height + '</p>' + '<p>' + 'Weight: ' + pokemon.weight + 'kg </p>' + "<p>" + "Types : ");
+    let modalInfo = $('<p>' + 'Height: ' + pokemon.height + '</p>' + '<p>' + 'Weight: ' + pokemon.weight + 'kg </p>' + "<p>" + "Types : " + "</p>");
      modalTitle.append(modalName);
     modalBody.append(modalImg);
     modalBody.append(modalInfo);

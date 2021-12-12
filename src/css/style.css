@@ -20,8 +20,6 @@ body{
     border-radius: 25px;
     font-size: 2rem;  
 }
-
-
 .btn img {
     width: 100%;
 }
@@ -53,7 +51,7 @@ h1{
     }
 }
 .btn{
-    font-size: 4rem;
+    font-size: 3rem;
     margin: 10px;
 }
 .search-button {
