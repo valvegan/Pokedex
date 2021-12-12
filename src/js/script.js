@@ -104,6 +104,8 @@ let modalContainer = document.querySelector("#modal-container");
   searchInput.addEventListener('keyup', findPoke);
   //event listener for search button, to show searched pokemon
   searchBtn.addEventListener("click", search);
+  searchBtn.dataset.toggle = "modal"
+  searchBtn.dataset.target = "#modal-container"
 
     
 //function to make the modal of the searched pokemon pop up
@@ -208,14 +210,6 @@ showModal(pokemon)
         })
       };
 
-
-//function for click event 
-/*function clickyEvent(button, pokemon){
-button.addEventListener("click", function(){
-    showDetails(pokemon)
-})
-};*/
-
 function addListItem(pokemon){
     let pokemonItem = document.createElement("li"); 
     pokemonItem.classList.add("group-list-item")
@@ -226,7 +220,9 @@ function addListItem(pokemon){
     button.dataset.toggle = "modal"
     button.dataset.target = "#modal-container"
     pokemonItem.appendChild(button);
-    //clickyEvent(button, pokemon); 
+    button.addEventListener("click", function(){
+    showDetails(pokemon)
+})
 
 };
 
