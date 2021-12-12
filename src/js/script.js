@@ -96,13 +96,11 @@ function add(pokemon) {
     };
 
 //modal container(background)
+let modalContainer = document.querySelector("#modal-container");
   let pokemonListDOM = document.querySelector(".pokemon-list");
   //search bar
   let searchBtn = document.querySelector(".search-button");
   let searchInput = document.querySelector(".search-input");
-
-  //press enter to fill in the input (doesnt work)
-  searchInput.focus()
   searchInput.addEventListener('keyup', findPoke);
   //event listener for search button, to show searched pokemon
   searchBtn.addEventListener("click", search);
@@ -212,11 +210,11 @@ showModal(pokemon)
 
 
 //function for click event 
-/*function clickyEvent(button, pokemon){
+function clickyEvent(button, pokemon){
 button.addEventListener("click", function(){
     showDetails(pokemon)
 })
-};*/
+};
 
 function addListItem(pokemon){
     let pokemonItem = document.createElement("li"); 
@@ -228,7 +226,7 @@ function addListItem(pokemon){
     button.dataset.toggle = "modal"
     button.dataset.target = "#modal-container"
     pokemonItem.appendChild(button);
-    //clickyEvent(button, pokemon); 
+    clickyEvent(button, pokemon); 
 
 };
 
@@ -240,6 +238,7 @@ return {
     loadList: loadList,
     loadDetails: loadDetails,
     showModal: showModal,
+    search: search
 };
 })();
 
