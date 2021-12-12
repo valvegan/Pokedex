@@ -104,8 +104,8 @@ let modalContainer = document.querySelector("#modal-container");
   searchInput.addEventListener('keyup', findPoke);
   //event listener for search button, to show searched pokemon
   searchBtn.addEventListener("click", search);
-  searchBtn.dataset.toggle = "modal"
-  searchBtn.dataset.target = "#modal-container"
+  searchBtn.dataset.toggle = "modal";
+  searchBtn.dataset.target = "#modal-container";
 
     
 //function to make the modal of the searched pokemon pop up
@@ -115,7 +115,8 @@ function search(){
   let indexOfSearched = pokemonList.map(function(e){
   return e.name.toLowerCase()
   }).indexOf(searched);
-  showDetails(pokemonList[indexOfSearched]); 
+  if (searched !== null){
+  showDetails(pokemonList[indexOfSearched])}; 
 }
 
 //press enter key to have pokemon modal pop up
