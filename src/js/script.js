@@ -66,14 +66,14 @@ function getAll() {
     };
 
 //message on load 
-let loadingMessage = document.querySelector(".loading-message");
+let loadingMessage = document.querySelector('.loading-message');
 
 function showLoadingMessage(){
-loadingMessage.innerText = "Loading pokemons...please wait"
+loadingMessage.innerText = 'Loading pokemons...please wait'
 };
 
 function hideLoadingMessage(){
-loadingMessage.style.display = "none"
+loadingMessage.style.display = 'none'
 };
 
 function add(pokemon) {
@@ -82,30 +82,30 @@ function add(pokemon) {
     //let itemAttributes = Object.keys(pokemon)
     //const safeAttributes = ["name", "height", "types"]
           if(
-              typeof(pokemon) === "object" &&
-                "name" in pokemon &&
-                "detailsUrl" in pokemon)  
+              typeof(pokemon) === 'object' &&
+                'name' in pokemon &&
+                'detailsUrl' in pokemon)  
             
             //safeAttributes.every(function(attr){
                 //return attr in pokemon}))
           {
         pokemonList.push(pokemon)
           } else{
-              document.write("<p>Error adding item, item needs to be an object and have the required 3 properties</p>")
+              document.write('<p>Error adding item, item needs to be an object and have the required 3 properties</p>')
           }
     };
 
 //modal container(background)
-let modalContainer = document.querySelector("#modal-container");
-  let pokemonListDOM = document.querySelector(".pokemon-list");
+let modalContainer = document.querySelector('#modal-container');
+  let pokemonListDOM = document.querySelector('.pokemon-list');
   //search bar
-  let searchBtn = document.querySelector(".search-button");
-  let searchInput = document.querySelector(".search-input");
+  let searchBtn = document.querySelector('.search-button');
+  let searchInput = document.querySelector('.search-input');
   searchInput.addEventListener('keyup', findPoke);
   //event listener for search button, to show searched pokemon
-  searchBtn.addEventListener("click", search);
-  searchBtn.dataset.toggle = "modal";
-  searchBtn.dataset.target = "#modal-container";
+  searchBtn.addEventListener('click', search);
+  searchBtn.dataset.toggle = 'modal';
+  searchBtn.dataset.target = '#modal-container';
 
     
 //function to make the modal of the searched pokemon pop up
