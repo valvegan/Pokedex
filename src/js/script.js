@@ -210,11 +210,11 @@ showModal(pokemon)
 
 
 //function for click event 
-function clickyEvent(button, pokemon){
+/*function clickyEvent(button, pokemon){
 button.addEventListener("click", function(){
     showDetails(pokemon)
 })
-};
+};*/
 
 function addListItem(pokemon){
     let pokemonItem = document.createElement("li"); 
@@ -226,7 +226,7 @@ function addListItem(pokemon){
     button.dataset.toggle = "modal"
     button.dataset.target = "#modal-container"
     pokemonItem.appendChild(button);
-    clickyEvent(button, pokemon); 
+    //clickyEvent(button, pokemon); 
 
 };
 
