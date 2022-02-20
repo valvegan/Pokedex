@@ -48,7 +48,7 @@ let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
         //hide loading message
       hideLoadingMessage();
         //now we add the details to the item
-        pokemon.imageUrl = details.sprites.front_shiny;
+        pokemon.imageUrl = details.sprites.other.dream_world.front_default;
         pokemon.height = details.height;
         pokemon.types = details.types;
         pokemon.weight = details.weight;
